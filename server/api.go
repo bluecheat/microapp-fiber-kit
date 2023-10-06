@@ -13,13 +13,14 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 	"microapp-fiber-kit/config"
 	"microapp-fiber-kit/internal/board"
+	"microapp-fiber-kit/router"
 	"strings"
 )
 
 type FiberApiServer struct {
 	conf     *config.Config
-	server   *fiber.App
-	boardSrv *board.BoardService
+	Server   *fiber.App
+	BoardSrv *board.BoardService
 }
 
 func NewFiberApiServer(conf *config.Config, boardSrv *board.BoardService) *FiberApiServer {
@@ -54,17 +55,17 @@ func NewFiberApiServer(conf *config.Config, boardSrv *board.BoardService) *Fiber
 	server.Use(recover.New())
 
 	return &FiberApiServer{
-		server:   server,
-		boardSrv: boardSrv,
+		Server:   server,
+		BoardSrv: boardSrv,
 	}
 }
 
 func (s FiberApiServer) Listen(addr string) error {
-	return s.server.Listen(addr)
+	return s.Server.Listen(addr)
 }
 
 func (s FiberApiServer) Shutdown() error {
-	return s.server.Shutdown()
+	return s.Server.Shutdown()
 }
 
 func Api(
@@ -73,8 +74,8 @@ func Api(
 	api *FiberApiServer,
 ) {
 
-	Router(api)
-	SwaggerRoute(api)
+	router.Router(api)
+	router.SwaggerRoute(api)
 
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {

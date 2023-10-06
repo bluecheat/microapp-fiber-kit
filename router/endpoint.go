@@ -1,4 +1,4 @@
-package server
+package router
 
 import (
 	"fmt"
@@ -15,7 +15,7 @@ import (
 //	paramsTag    = "params"
 //)
 
-type FiberEndpoint func(ctx *fiber.Ctx) error
+type serviceFunc[I interface{}, O interface{}] func(req *I) (*O, error)
 
 // 생성한 구조체에 대해 Validate 함수 생성
 var validate *validator.Validate
@@ -82,7 +82,7 @@ func responseRedirect(c *fiber.Ctx, url string, response interface{}, err error)
 	return c.Redirect(url+"?"+v.Encode(), 301)
 }
 
-func wrapHandler[I interface{}, O interface{}](srv ServiceFunc[I, O]) fiber.Handler {
+func wrapHandler[I interface{}, O interface{}](srv serviceFunc[I, O]) fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
 		var req = new(I)
 
@@ -101,7 +101,7 @@ func wrapHandler[I interface{}, O interface{}](srv ServiceFunc[I, O]) fiber.Hand
 	}
 }
 
-func wrapQueryHandler[I interface{}, O interface{}](input I, srv ServiceFunc[I, O]) fiber.Handler {
+func wrapQueryHandler[I interface{}, O interface{}](input I, srv serviceFunc[I, O]) fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
 		var req = &input
 		if err := queryValidator(ctx, req); err != nil {
@@ -111,7 +111,7 @@ func wrapQueryHandler[I interface{}, O interface{}](input I, srv ServiceFunc[I, 
 		return response(ctx, result, err)
 	}
 }
-func wrapBodyHandler[I interface{}, O interface{}](input I, srv ServiceFunc[I, O]) fiber.Handler {
+func wrapBodyHandler[I interface{}, O interface{}](input I, srv serviceFunc[I, O]) fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
 		var req = &input
 		if err := bodyValidator(ctx, req); err != nil {
@@ -122,7 +122,7 @@ func wrapBodyHandler[I interface{}, O interface{}](input I, srv ServiceFunc[I, O
 	}
 }
 
-func wrapParamHandler[I interface{}, O interface{}](input I, srv ServiceFunc[I, O]) fiber.Handler {
+func wrapParamHandler[I interface{}, O interface{}](input I, srv serviceFunc[I, O]) fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
 		var req = &input
 		if err := pathValidator(ctx, req); err != nil {
