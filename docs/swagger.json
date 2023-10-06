@@ -1,0 +1,100 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "MicroApp documentation",
+    "contact": {},
+    "version": "1.0.0"
+  },
+  "basePath": "/",
+  "paths": {
+    "/v1/board": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "게시판 등록 API",
+        "parameters": [
+          {
+            "description": "CreateBoardRequest",
+            "name": "board.CreateBoardRequest",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/board.CreateBoardRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/board.BoardMsg"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/server.Error"
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/server.Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "board.BoardMsg": {
+      "type": "object",
+      "properties": {
+        "boardId": {
+          "type": "integer"
+        },
+        "content": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "userEmail": {
+          "type": "string"
+        }
+      }
+    },
+    "board.CreateBoardRequest": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "server.Error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

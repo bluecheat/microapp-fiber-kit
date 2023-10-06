@@ -1,0 +1,64 @@
+basePath: /
+definitions:
+  board.BoardMsg:
+    properties:
+      boardId:
+        type: integer
+      content:
+        type: string
+      createdAt:
+        type: string
+      title:
+        type: string
+      updatedAt:
+        type: string
+      userEmail:
+        type: string
+    type: object
+  board.CreateBoardRequest:
+    properties:
+      content:
+        type: string
+      title:
+        type: string
+    type: object
+  server.Error:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+info:
+  contact: { }
+  title: MicroApp documentation
+  version: 1.0.0
+paths:
+  /v1/board:
+    post:
+      consumes:
+        - application/json
+      parameters:
+        - description: CreateBoardRequest
+          in: body
+          name: board.CreateBoardRequest
+          required: true
+          schema:
+            $ref: '#/definitions/board.CreateBoardRequest'
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/board.BoardMsg'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/server.Error'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/server.Error'
+      summary: 게시판 등록 API
+swagger: "2.0"

@@ -1,6 +1,6 @@
 module microapp-fiber-kit
 
-go 1.21
+go 1.20
 
 require (
 	github.com/arsmn/fiber-swagger/v2 v2.31.1

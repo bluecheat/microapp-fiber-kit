@@ -1,6 +1,9 @@
 package database
 
-import "log"
+import (
+	"log"
+	"microapp-fiber-kit/internal/domains"
+)
 
 func AutoMigration(db *Database) {
 	if err := db.gormDb.AutoMigrate(
@@ -10,4 +13,7 @@ func AutoMigration(db *Database) {
 	}
 }
 
-var MigrationDomains = []interface{}{}
+var MigrationDomains = []interface{}{
+	&domains.User{},
+	&domains.Board{},
+}

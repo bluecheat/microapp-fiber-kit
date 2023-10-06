@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/log"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
@@ -11,14 +12,17 @@ import (
 	"go.uber.org/fx"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"microapp-fiber-kit/config"
-	"microapp-fiber-kit/server/router"
+	"microapp-fiber-kit/internal/board"
 	"strings"
 )
 
-func Api(
-	lc fx.Lifecycle,
-	conf *config.Config,
-) *fiber.App {
+type FiberApiServer struct {
+	conf     *config.Config
+	server   *fiber.App
+	boardSrv *board.BoardService
+}
+
+func NewFiberApiServer(conf *config.Config, boardSrv *board.BoardService) *FiberApiServer {
 	server := fiber.New(fiber.Config{
 		ErrorHandler: DefaultErrorHandler,
 	})
@@ -49,17 +53,41 @@ func Api(
 	}
 	server.Use(recover.New())
 
-	router.SwaggerRoute(server)
-	router.NoAuthRoute(server)
+	return &FiberApiServer{
+		server:   server,
+		boardSrv: boardSrv,
+	}
+}
+
+func (s FiberApiServer) Listen(addr string) error {
+	return s.server.Listen(addr)
+}
+
+func (s FiberApiServer) Shutdown() error {
+	return s.server.Shutdown()
+}
+
+func Api(
+	conf *config.Config,
+	lc fx.Lifecycle,
+	api *FiberApiServer,
+) {
+
+	Router(api)
+	SwaggerRoute(api)
 
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
-			go server.Listen(conf.Host + ":" + conf.Port)
+			go func() {
+				err := api.Listen(conf.Host + ":" + conf.Port)
+				if err != nil {
+					log.Error(err)
+				}
+			}()
 			return nil
 		},
 		OnStop: func(ctx context.Context) error {
-			return server.Shutdown()
+			return api.Shutdown()
 		},
 	})
-	return server
 }
