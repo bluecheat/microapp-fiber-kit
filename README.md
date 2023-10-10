@@ -7,12 +7,11 @@ Microapp Fiber Kit은 Go 언어로 작성된 마이크로서비스 애플리케�
 
 ## 주요 특징
 
-- **Fiber 웹 프레임워크**: 빠르고 유연한 웹 개발을 위한 Fiber 프레임워크 사용
+- **Clean Architecture & DDD 구조**: 클린 아키텍처 및 DDD 관점으로 설계된 패키지 구조
+- **손쉬운 환경 설정**: `env.yaml` 파일을 통한 환경 변수 관리
 - **데이터베이스 연동**: GORM을 이용한 데이터베이스 관리
 - **API 문서화**: Swagger를 통한 API 문서 자동 생성
-- **환경 설정**: `.env.yaml` 파일을 통한 환경 변수 관리
-- **에러 핸들링**: 커스텀 에러 핸들러 구현
-- **미들웨어 지원**: 다양한 미들웨어 옵션 제공
+- **비즈니스로직 개발 편의성**: fx 라이브러리를 사용한 DI 주입 및 템플릿화
 
 ## 설치 방법
 
@@ -22,11 +21,11 @@ Microapp Fiber Kit은 Go 언어로 작성된 마이크로서비스 애플리케�
    ```
 2. 의존성을 설치합니다.
    ```bash
-    go mod download
+   go mod download
    ```
 3. 애플리케이션을 실행합니다.
    ```bash
-    go run cmd/microapp/main.go
+   go run cmd/microapp/main.go
    ```
 
 ## 사용 방법
