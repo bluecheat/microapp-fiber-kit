@@ -5,6 +5,7 @@ import (
 	"microapp-fiber-kit/config"
 	"microapp-fiber-kit/database"
 	"microapp-fiber-kit/internal/board"
+	"microapp-fiber-kit/internal/user"
 	"microapp-fiber-kit/server"
 )
 
@@ -27,12 +28,16 @@ func MicroApp(conf *config.Config) *fx.App {
 	)
 }
 
-// 공급
+// 의존성 주입
 func providers() []interface{} {
 	return []interface{}{
 		database.NewDatabase,
 		board.NewBoardRepository,
 		board.NewBoardService,
+		user.NewUserRepository,
+		user.NewUserService,
+		// More Services...
+
 		server.NewFiberApiServer,
 	}
 }
