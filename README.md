@@ -41,19 +41,19 @@ Microapp Fiber Kit은 Go 언어로 작성된 마이크로서비스 애플리케�
 
 ```markdown
 ㄴ cmd
-ㄴ microapp
-ㄴ app.go # 서비스 의존성 주입 관리 (*중요)
-ㄴ args.go
-ㄴ main.go # 실행 파일 존재
+    ㄴ microapp
+        ㄴ app.go # 서비스 의존성 주입 관리 (*중요)
+        ㄴ args.go
+        ㄴ main.go # 실행 파일 존재
 ㄴ config # 환경변수 관리
 ㄴ database # 데이터베이스 관리
 ㄴ docs # swagger 자동생성파일 (수정 X)
 ㄴ internal # 실제 비즈니스,도메인 로직
-ㄴ domains 엔티티
-ㄴ ... 도메인 애그리게이트
+   ㄴ domains 엔티티
+    ㄴ ... 도메인 애그리게이트
 ㄴ server
-ㄴ middleware # 세션 혹은 token 미들웨어
-ㄴ router # api 라우팅 테이블
+    ㄴ middleware # 세션 혹은 token 미들웨어
+    ㄴ router # api 라우팅 테이블
 ㄴ utils # 공통 사용 함수
 ```
 
