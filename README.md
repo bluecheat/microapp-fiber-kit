@@ -36,7 +36,8 @@ Microapp Fiber Kit은 Go 언어로 작성된 마이크로서비스 애플리케�
 
 패키지 구조는 기본적으로 클린아키텍처를 기반으로 도메인 영역과 인프라스트럭처 영역을 분리하였고,
 내부 비즈니스 로직의 경우 internal 내에서 `aggregateRoot` > `service`, `repository`, `message` 순으로 작성하였습니다.
-( 예시로 board와 user )
+
+( 예시로 board와 user 디렉토리가 템플릿에 포함되어 있습니다. )
 
 ```markdown
 ㄴ cmd
@@ -58,9 +59,9 @@ Microapp Fiber Kit은 Go 언어로 작성된 마이크로서비스 애플리케�
 
 ## 사용 방법
 
-### 환경변수 수정 방법
+### 환경변수 설정
 
-프로젝트 루트에 `env.yaml` 를 적절하게 수정해주세요
+프로젝트 루트에 `env.yaml` 를 통해 아래와 같은 환경변수를 설정 할 수 있습니다.
 
 - 서버의 host, port 변경
 - cors 설정
@@ -88,8 +89,8 @@ Microapp Fiber Kit은 Go 언어로 작성된 마이크로서비스 애플리케�
    }
    ```
 
-3. `server / api.go` 에 앞서 주입한 서비스를 파라미터로 전달 받는다.
-4. `server / router / handler.go` 에서 api 설정 및 service 를 매핑한다.
+3. `server / api.go` 에 앞서 주입한 서비스를 파라미터로 전달 받습니다.
+4. `server / router / handler.go` 에서 api 설정 및 service 를 매핑합니다.
    ```go
     func Route(
          router fiber.Router,
@@ -118,7 +119,7 @@ Microapp Fiber Kit은 Go 언어로 작성된 마이크로서비스 애플리케�
 
 ### 문서 작성 방법
 
-1. swag 기반으로 swagger를 기록하고 있기때문에 https://github.com/swaggo/swag 참고하여 각 `service` 함수 상단에 작성
+1. swag 기반으로 swagger 주석을 사용하고 있기때문에 https://github.com/swaggo/swag 참고하여 각 `service` 함수 상단에 작성합니다.
    ```go
    // Service godoc
    // @Summary		Other API
