@@ -2,12 +2,12 @@ package router
 
 import (
 	swagger "github.com/arsmn/fiber-swagger/v2"
+	"github.com/gofiber/fiber/v2"
 	_ "microapp-fiber-kit/docs"
-	"microapp-fiber-kit/server"
 )
 
 func SwaggerRoute(
-	api *server.FiberApiServer,
+	router fiber.Router,
 ) {
-	api.Server.Get("/swagger/*", swagger.HandlerDefault) // default
+	router.Get("/swagger/*", swagger.HandlerDefault) // default
 }

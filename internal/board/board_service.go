@@ -18,9 +18,7 @@ func NewBoardService(boardRepo IBoardRepository) *BoardService {
 // @Accept		json
 // @Produce		json
 // @Param 		board.CreateBoardRequest body board.CreateBoardRequest true "CreateBoardRequest"
-// @Success 200 {object} board.BoardMsg
 // @Success		200		{object}	board.BoardMsg
-// @Failure	401  		{object}  	server.Error
 // @Failure	409  		{object}  	server.Error
 // @Router			/v1/board [post]
 func (s *BoardService) CreateBoard(req *CreateBoardRequest) (*BoardMsg, error) {
@@ -43,6 +41,14 @@ func (s *BoardService) CreateBoard(req *CreateBoardRequest) (*BoardMsg, error) {
 	}, nil
 }
 
+// GetBoard godoc
+// @Summary		게시판 조회 API
+// @Accept		json
+// @Produce		json
+// @Param			id	path		int	true	"Board ID"
+// @Success		200		{object}	board.BoardMsg
+// @Failure	409  		{object}  	server.Error
+// @Router			/v1/board/{id} [get]
 func (s *BoardService) GetBoard(req *GetBoardRequest) (*BoardMsg, error) {
 	board, err := s.boardRepo.GetBoard(req.BoardId)
 	if err != nil {
@@ -59,6 +65,14 @@ func (s *BoardService) GetBoard(req *GetBoardRequest) (*BoardMsg, error) {
 	}, nil
 }
 
+// GetBoards godoc
+// @Summary		게시판 목록 조회 API
+// @Accept		json
+// @Produce		json
+// @Param 		board.GetBoardsRequest query board.GetBoardsRequest true "GetBoardsRequest"
+// @Success		200		{object}	board.BoardsMsg
+// @Failure	409  		{object}  	server.Error
+// @Router			/v1/board [get]
 func (s *BoardService) GetBoards(req *GetBoardsRequest) (*BoardsMsg, error) {
 	var boards []*domains.Board
 
