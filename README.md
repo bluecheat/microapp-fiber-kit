@@ -49,8 +49,8 @@ Microapp Fiber Kit은 Go 언어로 작성된 마이크로서비스 애플리케�
 ㄴ database # 데이터베이스 관리
 ㄴ docs # swagger 자동생성파일 (수정 X)
 ㄴ internal # 실제 비즈니스,도메인 로직
-   ㄴ domains 엔티티
-    ㄴ ... 도메인 애그리게이트
+   ㄴ domains # 엔티티
+   ㄴ ... 도메인 애그리거트
 ㄴ server
     ㄴ middleware # 세션 혹은 token 미들웨어
     ㄴ router # api 라우팅 테이블
