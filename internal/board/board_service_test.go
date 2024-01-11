@@ -4,7 +4,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"gorm.io/gorm"
-	"microapp-fiber-kit/internal/domains"
+	"microapp-fiber-kit/domains"
 	"testing"
 )
 

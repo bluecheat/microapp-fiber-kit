@@ -3,9 +3,10 @@ package main
 import (
 	"go.uber.org/fx"
 	"microapp-fiber-kit/config"
-	"microapp-fiber-kit/database"
+	"microapp-fiber-kit/config/database"
 	"microapp-fiber-kit/internal/board"
 	"microapp-fiber-kit/internal/user"
+	"microapp-fiber-kit/persistence"
 	"microapp-fiber-kit/server"
 )
 
@@ -32,9 +33,9 @@ func MicroApp(conf *config.Config) *fx.App {
 func providers() []interface{} {
 	return []interface{}{
 		database.NewDatabase,
-		board.NewBoardRepository,
+		persistence.NewBoardRepository,
 		board.NewBoardService,
-		user.NewUserRepository,
+		persistence.NewUserRepository,
 		user.NewUserService,
 		// More Services...
 

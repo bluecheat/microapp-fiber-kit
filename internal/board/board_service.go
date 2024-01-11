@@ -1,15 +1,15 @@
 package board
 
 import (
-	"microapp-fiber-kit/internal/domains"
+	"microapp-fiber-kit/domains"
 	"microapp-fiber-kit/utils"
 )
 
 type BoardService struct {
-	boardRepo IBoardRepository
+	boardRepo domains.IBoardRepository
 }
 
-func NewBoardService(boardRepo IBoardRepository) *BoardService {
+func NewBoardService(boardRepo domains.IBoardRepository) *BoardService {
 	return &BoardService{boardRepo: boardRepo}
 }
 

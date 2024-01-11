@@ -1,23 +1,17 @@
-package board
+package persistence
 
 import (
 	"errors"
 	"gorm.io/gorm"
-	"microapp-fiber-kit/database"
-	"microapp-fiber-kit/internal/domains"
+	"microapp-fiber-kit/config/database"
+	"microapp-fiber-kit/domains"
 )
-
-type IBoardRepository interface {
-	GetBoard(id uint) (*domains.Board, error)
-	SearchBoard(search map[string]string) ([]*domains.Board, error)
-	CreateBoard(board *domains.Board) (*domains.Board, error)
-}
 
 type BoardRepository struct {
 	database *database.Database
 }
 
-func NewBoardRepository(database *database.Database) IBoardRepository {
+func NewBoardRepository(database *database.Database) domains.IBoardRepository {
 	return &BoardRepository{database: database}
 }
 

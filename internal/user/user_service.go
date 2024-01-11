@@ -2,15 +2,15 @@ package user
 
 import (
 	"errors"
-	"microapp-fiber-kit/internal/domains"
+	"microapp-fiber-kit/domains"
 	"microapp-fiber-kit/utils"
 )
 
 type UserService struct {
-	userRepo IUserRepository
+	userRepo domains.IUserRepository
 }
 
-func NewUserService(userRepo IUserRepository) *UserService {
+func NewUserService(userRepo domains.IUserRepository) *UserService {
 	return &UserService{userRepo: userRepo}
 }
 

@@ -1,22 +1,16 @@
-package user
+package persistence
 
 import (
 	"errors"
-	"microapp-fiber-kit/database"
-	"microapp-fiber-kit/internal/domains"
+	"microapp-fiber-kit/config/database"
+	"microapp-fiber-kit/domains"
 )
-
-type IUserRepository interface {
-	GetUser(id uint) (*domains.User, error)
-	GetUserByEmail(email string) (*domains.User, error)
-	CreateUser(user *domains.User) (*domains.User, error)
-}
 
 type UserRepository struct {
 	database *database.Database
 }
 
-func NewUserRepository(database *database.Database) IUserRepository {
+func NewUserRepository(database *database.Database) domains.IUserRepository {
 	return &UserRepository{database: database}
 }
 

@@ -3,7 +3,7 @@ package user
 import (
 	"github.com/stretchr/testify/mock"
 	"gorm.io/gorm"
-	"microapp-fiber-kit/internal/domains"
+	"microapp-fiber-kit/domains"
 	"microapp-fiber-kit/utils"
 	"reflect"
 	"testing"
@@ -33,7 +33,7 @@ var mockRepo = new(MockIUserRepository)
 
 func TestUserService_Join(t *testing.T) {
 	type fields struct {
-		userRepo IUserRepository
+		userRepo domains.IUserRepository
 	}
 	type args struct {
 		req *JoinRequest
@@ -48,7 +48,7 @@ func TestUserService_Join(t *testing.T) {
 		{
 			name: "회원가입 성공",
 			fields: fields{
-				userRepo: func() IUserRepository {
+				userRepo: func() domains.IUserRepository {
 					mockRepo.On("CreateUser", mock.Anything).Return(&domains.User{
 						Model:    gorm.Model{ID: 1},
 						Email:    "email@example.com",
@@ -92,7 +92,7 @@ func TestUserService_Join(t *testing.T) {
 
 func TestUserService_Login(t *testing.T) {
 	type fields struct {
-		userRepo IUserRepository
+		userRepo domains.IUserRepository
 	}
 	type args struct {
 		req *LoginRequest
@@ -107,7 +107,7 @@ func TestUserService_Login(t *testing.T) {
 		{
 			name: "로그인 성공",
 			fields: fields{
-				userRepo: func() IUserRepository {
+				userRepo: func() domains.IUserRepository {
 					hashPassword, _ := utils.Hash("1234")
 					mockRepo.On("GetUserByEmail", mock.Anything).Return(&domains.User{
 						Model:    gorm.Model{ID: 1},
@@ -134,7 +134,7 @@ func TestUserService_Login(t *testing.T) {
 		{
 			name: "로그인 실패 (유저 존재하지 않음)",
 			fields: fields{
-				userRepo: func() IUserRepository {
+				userRepo: func() domains.IUserRepository {
 					mockRepo.On("GetUserByEmail", mock.Anything).Return(nil, gorm.ErrRecordNotFound)
 					return mockRepo
 				}(),
@@ -150,7 +150,7 @@ func TestUserService_Login(t *testing.T) {
 		{
 			name: "로그인 실패 (패스워드 다름)",
 			fields: fields{
-				userRepo: func() IUserRepository {
+				userRepo: func() domains.IUserRepository {
 					hashPassword, _ := utils.Hash("234")
 					mockRepo.On("GetUserByEmail", mock.Anything).Return(&domains.User{
 						Model:    gorm.Model{ID: 1},

@@ -2,7 +2,7 @@ package database
 
 import (
 	"log"
-	"microapp-fiber-kit/internal/domains"
+	"microapp-fiber-kit/domains"
 )
 
 func AutoMigration(db *Database) {
